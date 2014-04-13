@@ -54,6 +54,16 @@ def like(status_id,uid,ownerid):
         print '对状态'+status_id+'点赞成功！'
     else:
         print '对状态'+status_id+'点赞失败！'
+
+def removelike(status_id,uid,ownerid):
+    req = urllib2.Request(url='http://removelike.renren.com/addlike?gid='+status_id+'&uid='+uid+'&owner='+ownerid)
+    #req.add_header('Cookie',cookie)
+    req.add_header('User-Agent',UA)
+    json_doc = json.loads(urllib2.urlopen(req).read())
+    if json_doc['likeCount']>0:
+        print '对状态'+status_id+'点赞成功！'
+    else:
+        print '对状态'+status_id+'点赞失败！'
     
 
     # status_count = 
@@ -61,6 +71,7 @@ def main():
     username = raw_input('请输入邮箱：')
     password = getpass.getpass('请输入密码（不会显示任何字符）：')
     print login(username,password)
+    get_friends()
     # get_status('465817176')
     # addfriend()
     # ff = open('status_qiezi.txt','r')
@@ -84,6 +95,7 @@ def login(username,password):
     uid = response.geturl().rpartition('/')[2]
     res = response.read()
     return uid
+
 def addfriend(id = '422395300',why = ''):
     html_doc = urllib2.urlopen('http://www.renren.com').read()
     # print html_doc
@@ -100,6 +112,12 @@ def addfriend(id = '422395300',why = ''):
         '_rtk':_rtk})
     urllib2.urlopen(url=url,data=data)
 
+def get_friends():
+    friends_info = open('friends_info.json','w')
+    html_doc = urllib2.urlopen('http://friend.renren.com/groupsdata').read()
+    string = html_doc.partition('"data" : ')[2]
+    string = string.rpartition('}')[0]
+    friends_info.write(string)
 
 if __name__ =='__main__':
     main()
