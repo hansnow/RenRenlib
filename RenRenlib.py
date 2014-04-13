@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-import base64
 import os
 import urllib
 import urllib2
@@ -8,6 +7,7 @@ import cookielib
 import re
 import json
 import time
+import getpass
 reload(sys)
 sys.setdefaultencoding('utf8')
 """
@@ -58,9 +58,11 @@ def like(status_id,uid,ownerid):
 
     # status_count = 
 def main():
-    login('hansnow2012@gmail.com','')
+    username = raw_input('请输入邮箱：')
+    password = getpass.getpass('请输入密码（不会显示任何字符）：')
+    print login(username,password)
     # get_status('465817176')
-    addfriend()
+    # addfriend()
     # ff = open('status_qiezi.txt','r')
     # status_id_list = ff.readlines()
     # for item in status_id_list:
