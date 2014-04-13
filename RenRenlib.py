@@ -8,6 +8,8 @@ import re
 import json
 import time
 import getpass
+from bs4 import BeautifulSoup
+import chardet
 reload(sys)
 sys.setdefaultencoding('utf8')
 """
@@ -33,7 +35,7 @@ def get_status(ownerid):
     status_json = urllib2.urlopen(status_req).read()
     status_list = json.loads(status_json)
     count = status_list['count']
-    for page in range(0,count/20):
+    for page in range(0,count/20+1):
         status_url = 'http://status.renren.com/GetSomeomeDoingList.do?userId='+ownerid+'&curpage='+str(page)
         status_req = urllib2.Request(url=status_url)
         #status_req.add_header('Cookie',cookie)
@@ -71,7 +73,8 @@ def main():
     username = raw_input('请输入邮箱：')
     password = getpass.getpass('请输入密码（不会显示任何字符）：')
     print login(username,password)
-    get_friends()
+    # get_friends()
+    get_share('320072834')
     # get_status('465817176')
     # addfriend()
     # ff = open('status_qiezi.txt','r')
@@ -118,6 +121,20 @@ def get_friends():
     string = html_doc.partition('"data" : ')[2]
     string = string.rpartition('}')[0]
     friends_info.write(string)
+def get_share(ownerid):
+    f_share = open('share_'+ownerid+'.txt','w')
+    html_doc = urllib2.urlopen('http://share.renren.com/share/timeline/'+ownerid+'?curpage=0&type=0').read()
+    soup = BeautifulSoup(html_doc)
+    #这里find出来的是Unicode对象，所以一开始的时候总是不能搜索到,总感觉这里怪怪的
+    num_span = soup.find(class_='pager-top clearfix').span.text.strip()
+    share_num = int(re.findall(u'共(\d+)条',num_span)[0])
+    for page in range(0,share_num/20+1):
+        soup = BeautifulSoup(urllib2.urlopen('http://share.renren.com/share/timeline/'+ownerid+'?curpage='+str(page)+'&type=0').read())
+        share_div = soup.find_all(class_='share-itembox')
+        for every_div in share_div:
+            f_share.write(every_div['id']+'\n')
+            print 'I have saved share \''+every_div['id']+'\' in page'+str(page)
+    f_share.close()
 
 if __name__ =='__main__':
     main()
