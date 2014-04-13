@@ -74,7 +74,8 @@ def main():
     password = getpass.getpass('请输入密码（不会显示任何字符）：')
     print login(username,password)
     # get_friends()
-    get_share('320072834')
+    # get_share('320072834')
+    # reply()
     # get_status('465817176')
     # addfriend()
     # ff = open('status_qiezi.txt','r')
@@ -135,6 +136,31 @@ def get_share(ownerid):
             f_share.write(every_div['id']+'\n')
             print 'I have saved share \''+every_div['id']+'\' in page'+str(page)
     f_share.close()
+def reply():
+    #这个函数有很大的问题，有时间再写
+# # share_17128869901
+#     html_doc = urllib2.urlopen('http://www.renren.com').read()
+#     # print html_doc
+#     # requestToken 可能是负数
+#     requestToken = re.findall("get_check:'(.*?)'",html_doc)[0]
+#     _rtk = re.findall("get_check_x:'(\w+)'",html_doc)[0]
+#     #http://www.renren.com/profileLogger/send
+#     data1 = urllib.urlencode({
+#         'log':'[{"sourceTag":"default","actionTag":"load","targetTag":"timeline_feed_retrieve","needRecordRelation":true,"sendUserId":"483996204","getUserId":"320072834"},{"sourceTag":"default","actionTag":"load","targetTag":"timeline_feed_retrieve","needRecordRelation":true,"sendUserId":"483996204","getUserId":"320072834"},{"actionTag":"reply","sourceTag":"default","targetTag":"feed","sendUserId":"483996204","getUserId":"320072834","needRecordRelation":false}]',
+#         'requestToken':requestToken,
+#         '_rtk':_rtk
+#         })
+#     print urllib2.urlopen(url='http://www.renren.com/profileLogger/send',data=data1).read()
+#     data2 = urllib.urlencode({
+#         'c':'this is a test sent from Python',
+#         'owner':'320072834',
+#         'rpLayer':'0',
+#         'source':'17128869901',
+#         't':'5',
+#         'requestToken':requestToken,
+#         '_rtk':_rtk
+#         })
+#     urllib2.urlopen(url='http://status.renren.com/feedcommentreply.do?&ff_id=320072834',data=data2)
 
 if __name__ =='__main__':
     main()
