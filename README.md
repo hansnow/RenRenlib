@@ -34,6 +34,7 @@ RenRenlib使用说明
 添加好友。该函数会向*id*发送好友请求，申请理由为why
 * `get_friends()`
 获取好友列表。将所有好友信息以json格式保存到当前目录下的*friends_info.json*文件下。
+
 ##丑话说在前头
 作者很菜，开发出来的东西也很菜，如果发现问题请提交Issue或者直接Email：hansnow2012@gmail.com
 
