@@ -16,16 +16,16 @@ RenRenlib使用说明
 * 获取某个好友信息
 * 状态的回复
 * 刚刚发现，目前只获取了status_id，还有share_id没有获取，而share_id貌似是html里面的
-
+* 获取好友的好友信息
 
 
 ## 使用方法
-将RenRenlib.py文件放到你的主程序目录下，然后import RenRenlib 即可。
+将RenRenlib.py文件放到你的主程序目录下，然后 import RenRenlib 即可。
 ###功能解析
 * `login(username,password)`
-登录，该函数应该在所有函数执行之前执行，以变CookieJar能够获得以后操作所需的Cookie。该函数也返回当前登录用户的uid
+登录，该函数应该在所有函数执行之前执行，以便CookieJar能够获得以后操作所需的Cookie。该函数也返回当前登录用户的uid
 * `get_status(ownerid)`
-该函数回获取所有 *ownerid* 的status_id，并以每行一个的形式保存在程序所在目录的*status_ownerid.txt*文件夹下
+该函数回获取所有 *ownerid* 的status_id，并以每行一个的形式保存在程序所在目录的*status_ownerid.txt*文件中
 * `like(status_id,uid,ownerid)`
 点赞。uid为登录帐号的id，由login()函数获得。
 * `removelike(status_id,uid,ownerid)`
@@ -36,6 +36,6 @@ RenRenlib使用说明
 获取好友列表。将所有好友信息以json格式保存到当前目录下的*friends_info.json*文件下。
 
 ##丑话说在前头
-作者很菜，开发出来的东西也很菜，如果发现问题请提交Issue或者直接Email：hansnow2012@gmail.com
+作者很菜，开发出来的东西也很菜，如果发现问题请提交Issue或者直接Email：hansnow2012#gmail.com
 
 enjoy~
