@@ -13,9 +13,11 @@ RenRenlib使用说明
 
 ##TODO
 
-* 获取好友列表
 * 获取某个好友信息
 * 状态的回复
+* 刚刚发现，目前只获取了status_id，还有share_id没有获取，而share_id貌似是html里面的
+
+
 
 ## 使用方法
 将RenRenlib.py文件放到你的主程序目录下，然后import RenRenlib 即可。
