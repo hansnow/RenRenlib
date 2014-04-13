@@ -58,7 +58,7 @@ def like(status_id,uid,ownerid):
 
     # status_count = 
 def main():
-    login('hansnow2012@gmail.com','woshixhxh4291221')
+    login('hansnow2012@gmail.com','')
     # get_status('465817176')
     addfriend()
     # ff = open('status_qiezi.txt','r')
