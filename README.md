@@ -8,37 +8,41 @@ RenRenlib使用说明
 * 获取用户的所有状态、所有分享、所有好友
 * 通过状态ID对某条状态点赞和取消赞（后期会开发回复）
 * 发出好友申请
+* 20140414:所有函数已经包含在RenRen这个类中，调用更方便
 
 还有很多功能可以实现，以后慢慢添加。
 
 ##TODO
 
 * 获取某个好友信息
-* 状态的回复
+* 状态的回复(简单抓了一下包，难度有点大)
 * share_id虽然取到了，但是效率很低(html中爬出来的)，不知道有没有json的接口
 * 获取好友的好友信息
-* 整个结构重写。显然用一个类来包含这些函数更合适
 
 
 ## 使用方法
-将RenRenlib.py文件放到你的主程序目录下，然后 import RenRenlib 即可。
+将RenRenlib.py文件放到你的主程序目录下，然后 import RenRenlib ，在程序的主函数新建一个 RenRen对象即可，比如 a = RenRen()
 ###功能解析
-* `login(username,password)`
-登录，该函数应该在所有函数执行之前执行，以便CookieJar能够获得以后操作所需的Cookie。该函数也返回当前登录用户的uid
+
 * `get_status(ownerid)`
-该函数回获取所有 *ownerid* 的status_id，并以每行一个的形式保存在程序所在目录的*status_ownerid.txt*文件中
-* `like(status_id,uid,ownerid)`
-点赞。uid为登录帐号的id，由login()函数获得。
+该函数回获取所有 *ownerid* 的status_id，并以每行一个的形式保存在程序所在目录的*status_[ownerid].txt*文件中
+* `like(status_id,ownerid)`
+点赞。ownerid为对方ID
 * `removelike(status_id,uid,ownerid)`
 取消赞。用法和上面的相同。（该函数还没经过测试）
-* `addfriend(id = '',why = '')`
+* `addfriend(id,why)`
 添加好友。该函数会向*id*发送好友请求，申请理由为why
 * `get_friends()`
 获取好友列表。将所有好友信息以json格式保存到当前目录下的*friends_info.json*文件下。
 * `get_share(ownerid)`
-获取分享。该函数和*get_status(ownerid)*结合可以获得owenrid的所有‘新鲜事儿’
+获取分享。该函数和*get_status(ownerid)*结合可以获得owenrid的所有‘新鲜事儿’。share_id以每行一个的形式保存在程序所在目录的*share_[ownerid].txt*文件中
+
+##更新记录
+* 2014-04-13:完成大部分基础的功能函数
+* 2014-04-14:所有函数包含在一个`RenRen`类中
+
 
 ##丑话说在前头
-作者很菜，开发出来的东西也很菜，如果发现问题请提交Issue或者直接Email：hansnow2012#gmail.com
+作者很菜，开发出来的东西也很菜，如果发现问题请提交issue或者直接Email：hansnow2012#gmail.com
 
 enjoy~
