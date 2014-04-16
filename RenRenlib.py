@@ -14,15 +14,13 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 """
 Author：Hansnow
-Date：2014-04-14
+Date：2014-04-16
 """
-UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36'
 
 class RenRen():
     #self的属性 uid requestToken _rtk
-    def __init__(self):
-        username = raw_input('请输入邮箱：')
-        password = getpass.getpass('请输入密码（不会显示任何字符）：')
+    def __init__(self,username,password,UA=''):
+        # TODO:自定义UA的问题
         cj = cookielib.CookieJar()
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         urllib2.install_opener(opener)
@@ -47,7 +45,7 @@ class RenRen():
         status_url = 'http://status.renren.com/GetSomeomeDoingList.do?userId='+ownerid+'&curpage=0'
         status_req = urllib2.Request(url=status_url)
         #status_req.add_header('Cookie',cookie)
-        status_req.add_header('User-Agent',UA)
+        # status_req.add_header('User-Agent',UA)
         status_json = urllib2.urlopen(status_req).read()
         status_list = json.loads(status_json)
         count = status_list['count']
@@ -76,7 +74,7 @@ class RenRen():
     def removelike(self,status_id,ownerid):
         req = urllib2.Request(url='http://removelike.renren.com/addlike?gid='+status_id+'&uid='+self.uid+'&owner='+ownerid)
         #req.add_header('Cookie',cookie)
-        req.add_header('User-Agent',UA)
+        # req.add_header('User-Agent',UA)
         json_doc = json.loads(urllib2.urlopen(req).read())
         if json_doc['likeCount']>0:
             print '对状态'+status_id+'点赞成功！'
@@ -91,17 +89,23 @@ class RenRen():
             'requestToken':requestToken,
             '_rtk':_rtk})
         urllib2.urlopen(url=url,data=data)
-    def get_friends():
-        f_friends= open('friends_info.json','w')
+    def get_mfriends(): 
+        # get my friends
+        # 数据格式：data[x]['fid']/['timepos']/['comf']/['compos']/['large_url']/['tiny_url']/['fname']/['info']/['pos']
         html_doc = urllib2.urlopen('http://friend.renren.com/groupsdata').read()
         string = html_doc.partition('"data" : ')[2]
         string = string.rpartition('}')[0]
-        f_friends.write(string)
-        # for i in string['friends']:
-        # print i['fname']
-        # print count
-        # count+=1
-        # print len(s['friends'])
+        return string['friends']
+    def get_ofriends(ownerid):
+        # get others friends
+        # 数据格式 data[x]['id']/['netName']/['netNamePrefix']/['head']/['isOnLine']/['name']
+        data = urllib2.urlopen('http://friend.renren.com/friendfriendSelector?p={%22init%22:true,%22uid%22:true,%22uhead%22:true,%22uname%22:true,%22group%22:true,%22net%22:true,%22param%22:{%22guest%22:'+ownerid+'}}').read()
+        return data['candidate']
+    def get_sfriends(ownerid):
+        # get share friends
+        # 数据格式 data[x]['id']/['netName']/['netNamePrefix']/['head']/['isOnLine']/['name']
+        data = urllib2.urlopen('http://friend.renren.com/shareFriends?t=0.5068212770856917&p={%22init%22:true,%22uid%22:true,%22uhead%22:true,%22uname%22:true,%22group%22:true,%22net%22:true,%22param%22:{%22guest%22:'+ownerid+'}}').read()
+        return data['candidate']
     def get_share(self,ownerid):
         f_share = open('share_'+ownerid+'.txt','w')
         html_doc = urllib2.urlopen('http://share.renren.com/share/timeline/'+ownerid+'?curpage=0&type=0').read()
@@ -119,8 +123,11 @@ class RenRen():
 
     # status_count = 
 def main():
-    r = RenRen()
+    username = raw_input('请输入邮箱：')
+    password = getpass.getpass('请输入密码（不会显示任何字符）：')
+    r = RenRen(username,password)
     r.get_status('')
+
     # get_friends()
     # get_share('320072834')
     # reply()
