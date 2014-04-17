@@ -17,29 +17,41 @@ RenRenlib使用说明
 * 获取某个好友信息
 * 状态的回复(简单抓了一下包，难度有点大)
 * share_id虽然取到了，但是效率很低(html中爬出来的)，不知道有没有json的接口
-* 获取好友的好友信息
+
 
 
 ## 使用方法
-将RenRenlib.py文件放到你的主程序目录下，然后 import RenRenlib ，在程序的主函数新建一个 RenRen对象即可，比如 a = RenRen()
+示例代码：
+`
+import RenRenlib
+username = raw_input('请输入邮箱：')
+password = getpass.getpass('请输入密码（不会显示任何字符）：')
+r = RenRenlib.RenRen(username,password)
+r.get_status('12345678')
+`
 ###功能解析
 
-* `get_status(ownerid)`
+* `RenRen.get_status(ownerid)`
 该函数回获取所有 *ownerid* 的status_id，并以每行一个的形式保存在程序所在目录的*status_[ownerid].txt*文件中
-* `like(status_id,ownerid)`
+* `RenRen.like(status_id,ownerid)`
 点赞。ownerid为对方ID
-* `removelike(status_id,uid,ownerid)`
+* `RenRen.removelike(status_id,uid,ownerid)`
 取消赞。用法和上面的相同。（该函数还没经过测试）
-* `addfriend(id,why)`
+* `RenRen.addfriend(id,why)`
 添加好友。该函数会向*id*发送好友请求，申请理由为why
-* `get_friends()`
-获取好友列表。将所有好友信息以json格式保存到当前目录下的*friends_info.json*文件下。
-* `get_share(ownerid)`
+* `RenRen.get_mfriends()`
+get my friends:获取好友列表。返回一个list，数据格式如下：`data[x]['fid']/['timepos']/['comf']/['compos']/['large_url']/['tiny_url']/['fname']/['info']/['pos']`。其中`fid`为好友id，`fname`为好友姓名，`large_url`为好友大头像，`tiny_url`为好友小头像，其他几项目前意义不明，如果大家发现了可以告诉我哦~
+* `RenRen.get_ofriends(ownerid)`
+get others friends:获取好友的好友列表。返回一个list，数据格式如下：`data[x]['id']/['netName']/['netNamePrefix']/['head']/['isOnLine']/['name']`。其中`id`为好友id，`netName`为好友的单位/所在城市信息，`netNamePrefix`为`netName`的类型，比如学校、城市等，`head`为小头像url，`isOnline`为是否在线，值为True/False，`name`为好友姓名。
+* `RenRen.get_sfriends(ownerid)`
+get share friends:获取共同好友列表。返回一个list，数据格式与`get_ofriends(ownerid)`完全相同。
+* `RenRen.get_share(ownerid)`
 获取分享。该函数和*get_status(ownerid)*结合可以获得owenrid的所有‘新鲜事儿’。share_id以每行一个的形式保存在程序所在目录的*share_[ownerid].txt*文件中
 
 ##更新记录
 * 2014-04-13:完成大部分基础的功能函数
 * 2014-04-14:所有函数包含在一个`RenRen`类中
+* 2014-04-16:完成获取好友、共同好友、好友的好友功能
 
 
 ##丑话说在前头
