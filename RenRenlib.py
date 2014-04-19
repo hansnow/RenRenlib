@@ -104,7 +104,7 @@ class RenRen():
     def get_sfriends(ownerid):
         # get share friends
         # 数据格式 data[x]['id']/['netName']/['netNamePrefix']/['head']/['isOnLine']/['name']
-        data = urllib2.urlopen('http://friend.renren.com/shareFriends?t=0.5068212770856917&p={%22init%22:true,%22uid%22:true,%22uhead%22:true,%22uname%22:true,%22group%22:true,%22net%22:true,%22param%22:{%22guest%22:'+ownerid+'}}').read()
+        data = urllib2.urlopen('http://friend.renren.com/shareFriends?&p={%22init%22:true,%22uid%22:true,%22uhead%22:true,%22uname%22:true,%22group%22:true,%22net%22:true,%22param%22:{%22guest%22:'+ownerid+'}}').read()
         return data['candidate']
     def get_share(self,ownerid):
         f_share = open('share_'+ownerid+'.txt','w')
@@ -127,37 +127,6 @@ def main():
     password = getpass.getpass('请输入密码（不会显示任何字符）：')
     r = RenRen(username,password)
     r.get_status('')
-
-    # get_friends()
-    # get_share('320072834')
-    # reply()
-    # get_status('465817176')
-    # addfriend()
-    # ff = open('status_qiezi.txt','r')
-    # status_id_list = ff.readlines()
-    # for item in status_id_list:
-    #     item = item.strip()
-    #     like(item)
-    #     time.sleep(240)
-    
-# def login(username,password):
-#     data = urllib.urlencode({'email':username,
-#         'password':password,
-#         'icode':'',
-#         'origURL':'http://www.renren.com/home',
-#         'domain':'renren.com',
-#         'key_id':'1',
-#         'captcha_type':'web_login'})
-#     req = urllib2.Request(url='http://www.renren.com/PLogin.do',data=data)
-#     # req.add_header('User-Agent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36')
-#     response =urllib2.urlopen(req)
-#     uid = response.geturl().rpartition('/')[2]
-#     res = response.read()
-#     return uid
-
-
-
-
 
 # def reply():
     #这个函数有很大的问题，有时间再写
