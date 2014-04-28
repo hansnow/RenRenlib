@@ -120,13 +120,31 @@ class RenRen():
                 f_share.write(every_div['id']+'\n')
                 print 'I have saved share \''+every_div['id']+'\' in page'+str(page)
         f_share.close()
+    def switch_account(self):
+        #只考虑了最理想的有多重身份的情况
+        # 函数目前还是不可用。。。不知道哪里出了问题，可能单单一个POST请求还不够
+        print self.whoami()
+        id_data = json.loads(urllib2.urlopen('http://www.renren.com/getOtherAccounts').read())
+        destID = id_data['otherAccounts'][0]['transId']
+        print destID
+        data = urllib.urlencode({'origUrl':'http://www.renren.com/'+self.uid,
+                                'destId':destID,
+                                'requestToken':self.requestToken,
+                                '_rtk':self._rtk})
+        req = urllib2.Request(url='http://www.renren.com/switchAccount',data=data)
+        # urllib2.urlopen(url='http://www.renren.com/switchAccount',data=data)
+        urllib2.urlopen(req)
+        print self.whoami()
+    def whoami(self):
+        #返回当前帐号身份的名称，主要用来区分多重身份情况情况
+        return json.loads(urllib2.urlopen('http://www.renren.com/getOtherAccounts').read())['self_name']
 
     # status_count = 
 def main():
     username = raw_input('请输入邮箱：')
     password = getpass.getpass('请输入密码（不会显示任何字符）：')
     r = RenRen(username,password)
-    r.get_status('')
+    r.switch_account()
 
 # def reply():
     #这个函数有很大的问题，有时间再写
