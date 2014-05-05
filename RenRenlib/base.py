@@ -54,7 +54,7 @@ class RenRen():
 
     def get_status(self,ownerid):
         #return count and write status into status.txt
-        f_status = open('status_.txt'+ownerid,'w')
+        f_status = open('status_'+ownerid+'.txt','w')
         status_url = 'http://status.renren.com/GetSomeomeDoingList.do?userId='+ownerid+'&curpage=0'
         status_req = urllib2.Request(url=status_url)
         #status_req.add_header('Cookie',cookie)
@@ -79,20 +79,23 @@ class RenRen():
         #req.add_header('Cookie',cookie)
         #req.add_header('User-Agent',UA)
         json_doc = json.loads(urllib2.urlopen(req,timeout=timeout).read())
-        if json_doc['likeCount']>0:
-            print '对状态'+status_id+'点赞成功！'
-        else:
-            print '对状态'+status_id+'点赞失败！'
+        # if json_doc['likeCount']>0:
+        #     print '对状态'+status_id+'点赞成功！'
+        # else:
+        #     print '对状态'+status_id+'点赞失败！'
+
+        return json_doc['code']
 
     def removelike(self,status_id,ownerid):
-        req = urllib2.Request(url='http://removelike.renren.com/addlike?gid='+status_id+'&uid='+self.uid+'&owner='+ownerid)
+        req = urllib2.Request(url='http://like.renren.com/removelike?gid='+status_id+'&uid='+self.uid+'&owner='+ownerid)
         #req.add_header('Cookie',cookie)
         # req.add_header('User-Agent',UA)
         json_doc = json.loads(urllib2.urlopen(req,timeout=timeout).read())
-        if json_doc['likeCount']>0:
-            print '对状态'+status_id+'点赞成功！'
-        else:
-            print '对状态'+status_id+'点赞失败！'
+        print '对状态'+status_id+'取消点赞成功！'
+        # if json_doc['likeCount']>0:
+        #     print '对状态'+status_id+'点赞成功！'
+        # else:
+        #     print '对状态'+status_id+'点赞失败！'
     def addfriend(self,ownerid,why):
         url = 'http://friend.renren.com/ajax_request_friend.do?from=Web_SG_AddFriendRec_addFriend_suggestion&'
         data = urllib.urlencode({'id':ownerid,
@@ -156,7 +159,11 @@ class RenRen():
     def whoami(self):
         #返回当前帐号身份的名称，主要用来区分多重身份情况情况
         return json.loads(urllib2.urlopen('http://www.renren.com/getOtherAccounts',timeout=timeout).read())['self_name']
-
+    def lot(self):
+        data = urllib.urlencode({'requestToken':self.requestToken,
+            '_rtk':self._rtk})
+        res = urllib2.urlopen(url='http://renpin.renren.com/mall/lottery/dolottery',data=data).read()
+        return res
     # status_count = 
 def main():
     opts,args = getopt.getopt(sys.argv[1:],"vhat:")

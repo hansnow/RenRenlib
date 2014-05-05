@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from RenRenlib.base import RenRen
-import getopt,sys
+import getopt,sys,time
 def main():
     opts,args = getopt.getopt(sys.argv[1:],"vhat:")
     username = ""
@@ -27,5 +27,13 @@ def main():
     print 'password:'+password
     r = RenRen(username,password)
     print r.uid
+    print r.whoami()
+    # # r.get_status('438591664')
+    # f = open('status_438591664.txt')
+    # status_list = f.readlines()
+    # for i in status_list:
+    #     print r.like(i.strip(),'438591664')
+    #     # time.sleep(1
+    print r.lot()
 if __name__ == '__main__':
     main()

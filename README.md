@@ -18,18 +18,20 @@ RenRenlib使用说明
 * 获取某个好友信息
 * 状态的回复(简单抓了一下包，难度有点大)
 * share_id虽然取到了，但是效率很低(html中爬出来的)，不知道有没有json的接口
-* 补充DEMO
+* 人品值抽奖，并简单计算今日收益
 
 
 ## 使用方法
 示例代码：
 `
-import RenRenlib
+from RenRenlib.base import RenRen
+import getpass
 username = raw_input('请输入邮箱：')
 password = getpass.getpass('请输入密码（不会显示任何字符）：')
-r = RenRenlib.RenRen(username,password)
-r.get_status('12345678')
+r = RenRen(username,password)
+print whoami() #显示当前用户的用户名
 `
+具体的启动参数可以运行 `python demo.py -h` 或者 `python base.py -h` 进行查看。
 ###功能解析
 
 * `RenRen.get_status(ownerid)`
@@ -48,11 +50,16 @@ get others friends:获取好友的好友列表。返回一个list，数据格式
 get share friends:获取共同好友列表。返回一个list，数据格式与`get_ofriends(ownerid)`完全相同。
 * `RenRen.get_share(ownerid)`
 获取分享。该函数和*get_status(ownerid)*结合可以获得owenrid的所有‘新鲜事儿’。share_id以每行一个的形式保存在程序所在目录的*share_[ownerid].txt*文件中
+* `RenRen.switch_account()`
+切换帐号身份。如果你管理着一个公共主页，那么这个功能将会把你的身份从个人帐号切换到公共主页。
+* `RenRen.whoami()`
+返回帐号身份。个人帐号会返回姓名；公共主页回返回公共主页名称。
 
 ##更新记录
 * 2014-04-13:完成大部分基础的功能函数
 * 2014-04-14:所有函数包含在一个`RenRen`类中
 * 2014-04-16:完成获取好友、共同好友、好友的好友功能
+* 2014-05-05:增加启动参数，模块和Demo分离
 
 
 ##丑话说在前头
