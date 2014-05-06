@@ -34,6 +34,10 @@ def main():
     # for i in status_list:
     #     print r.like(i.strip(),'438591664')
     #     # time.sleep(1
-    print r.lot()
+    li = []
+    for i in range(1,5):
+        li.append(r.lottery())
+    for i in li:
+        print r.use_lottery(i)
 if __name__ == '__main__':
     main()

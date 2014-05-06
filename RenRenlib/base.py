@@ -159,12 +159,26 @@ class RenRen():
     def whoami(self):
         #返回当前帐号身份的名称，主要用来区分多重身份情况情况
         return json.loads(urllib2.urlopen('http://www.renren.com/getOtherAccounts',timeout=timeout).read())['self_name']
-    def lot(self):
+    def lottery(self):
+        # 抽完奖直接就把奖卷用了
         data = urllib.urlencode({'requestToken':self.requestToken,
             '_rtk':self._rtk})
-        res = urllib2.urlopen(url='http://renpin.renren.com/mall/lottery/dolottery',data=data).read()
-        return res
-    # status_count = 
+        res = json.loads(urllib2.urlopen(url='http://renpin.renren.com/mall/lottery/dolottery',data=data).read())
+        if res['code'] == 0:
+            return res['id']
+        elif res['code'] == 11:
+            return 'usedup'
+        else:
+            return 'error'
+    def use_lottery(self,ticket):
+        data = urllib.urlencode({'id':ticket,
+            'requestToken':self.requestToken,
+            '_rtk':self._rtk})
+        res = json.loads(urllib2.urlopen(url='http://renpin.renren.com/mall/lottery/use',data=data).read())
+        if res['code'] == 0:
+            return res['lotteryRp']
+        else:
+            return 'error'
 def main():
     opts,args = getopt.getopt(sys.argv[1:],"vhat:")
     username = ""
