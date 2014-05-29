@@ -23,14 +23,14 @@ RenRenlib使用说明
 
 ## 使用方法
 示例代码：
-`
+```
 from RenRenlib.base import RenRen
 import getpass
 username = raw_input('请输入邮箱：')
 password = getpass.getpass('请输入密码（不会显示任何字符）：')
 r = RenRen(username,password)
 print whoami() #显示当前用户的用户名
-`
+```
 具体的启动参数可以运行 `python demo.py -h` 或者 `python base.py -h` 进行查看。
 ###功能解析
 
