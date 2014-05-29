@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from RenRenlib.base import RenRen
-import getopt,sys,time
+import getopt,sys,time,getpass
 def main():
     opts,args = getopt.getopt(sys.argv[1:],"vhat:")
     username = ""
@@ -26,16 +26,23 @@ def main():
     print 'username:'+username
     print 'password:'+password
     r = RenRen(username,password)
+
     print r.uid
     print r.whoami()
-    # # r.get_status('438591664')
+    # r.get_share('465817176')
+    # f = open('share_465817176.txt')
+    # slist = f.readlines()
+    # for i in slist:
+    #     print r.like(i.strip(),'465817176')
+    # r.get_status('438591664')
     # f = open('status_438591664.txt')
     # status_list = f.readlines()
     # for i in status_list:
-    #     print r.like(i.strip(),'438591664')
+    #     print r.like(i.strip(),'465817176')
     #     # time.sleep(1
+    # r = RenRen(username,password)
     li = []
-    for i in range(1,5):
+    for i in range(1,21):   
         li.append(r.lottery())
     for i in li:
         print r.use_lottery(i)
