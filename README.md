@@ -1,8 +1,8 @@
-RenRenlib使用说明
-=========
+# RenRenlib
 
 人人有自己的官方API，而且已经升级到了所谓的2.0版，但是这类API一般都是非常难用的，首先是认证麻烦，需要申请一个应用，而且要填写很多资料。然后呢，官方没有提供Python API。所以小寒用自己的三脚猫功夫写了RenRenlib，用urllib2模拟登录的方法来实现大部分人人API的功能。
-##功能概述
+
+## 功能概述
 
 * 模拟登录，登录后可以获得Cookie，用于做其他事儿。
 * 获取用户的所有状态、所有分享、所有好友
@@ -13,15 +13,15 @@ RenRenlib使用说明
 
 还有很多功能可以实现，以后慢慢添加。
 
-##TODO
+## TODO
 
 * 获取某个好友信息
 * 状态的回复(简单抓了一下包，难度有点大)
 * share_id虽然取到了，但是效率很低(html中爬出来的)，不知道有没有json的接口
 * 连续兑奖出现error，简单的今日人品收益计算
 
-
 ## 使用方法
+
 示例代码：
 ```
 from RenRenlib.base import RenRen
@@ -32,7 +32,8 @@ r = RenRen(username,password)
 print whoami() #显示当前用户的用户名
 ```
 具体的启动参数可以运行 `python demo.py -h` 或者 `python base.py -h` 进行查看。
-###功能解析
+
+### 功能解析
 
 * `RenRen.get_status(ownerid)`
 该函数回获取所有 *ownerid* 的status_id，并以每行一个的形式保存在程序所在目录的*status_[ownerid].txt*文件中
@@ -59,15 +60,14 @@ get share friends:获取共同好友列表。返回一个list，数据格式与`
 * `RenRen.use_lottery(ticket)`
 使用奖券。奖券即`lottery()`返回的lottery_id。返回值有两种：成功兑奖返回获得的人品值；失败返回error
 
-##更新记录
+## 更新记录
 * 2014-04-13:完成大部分基础的功能函数
 * 2014-04-14:所有函数包含在一个`RenRen`类中
 * 2014-04-16:完成获取好友、共同好友、好友的好友功能
 * 2014-05-05:增加启动参数，模块和Demo分离
 * 2014-05-06:增加抽奖和兑奖函数
 
+## 丑话说在前头
+作者很菜，开发出来的东西也很菜，如果发现问题请提交issue。
 
-##丑话说在前头
-作者很菜，开发出来的东西也很菜，如果发现问题请提交issue或者直接Email：hansnow2012#gmail.com
-
-enjoy~
+Happy Hacking!
